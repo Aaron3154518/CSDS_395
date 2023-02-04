@@ -1,4 +1,9 @@
-import { Component, ViewChild, AfterViewInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnDestroy, ElementRef, SimpleChange } from '@angular/core';
+
+interface Spiral {
+  r: number;
+  theta: number;
+};
 
 @Component({
   selector: 'app-root',
@@ -8,7 +13,8 @@ import { Component, ViewChild, AfterViewInit, OnDestroy, ElementRef } from '@ang
 export class AppComponent implements AfterViewInit, OnDestroy {
   @ViewChild("MyCanvas")
   canvas: ElementRef<HTMLCanvasElement>;
-  ctx: CanvasRenderingContext2D | null;
+  ctx: CanvasRenderingContext2D;
+  readonly w: number = 250;
 
   @ViewChild("MyAudio")
   audio: ElementRef<HTMLAudioElement>;
@@ -30,19 +36,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.ctx = this.canvas.nativeElement.getContext('2d');
+    let ctx = this.canvas.nativeElement.getContext('2d');
+    if (ctx) {
+      this.ctx = ctx;
+      this.ctx.canvas.width = this.ctx.canvas.height = this.w;
+    }
   }
 
   onPlay() {
     this.interval = setInterval(() => {
-      if (!this.audio || !this.amps) {
-        this.drawCircle(0);
-        return;
-      }
-
-      let prog = this.audio.nativeElement.currentTime / this.audio.nativeElement.duration;
-      this.idx = Math.floor(this.amps.length * prog);
-      this.drawCircle(this.amps[this.idx]);
+      this.onUpdate();
     }, 30);
   }
 
@@ -62,57 +65,89 @@ export class AppComponent implements AfterViewInit, OnDestroy {
           let max = this.amps.reduce((m, a) => Math.abs(a) > m ? Math.abs(a) : m, 0);
           this.amps = this.amps.map((a) => Math.abs(a) / max);
           this.rate = data.sampleRate;
-
-          // this.audioCtx = new window.AudioContext();
-          // // Required to start audio system for Aaron
-          // this.buff = this.audioCtx.createBuffer(2, this.audioCtx.sampleRate * 3, this.audioCtx.sampleRate);
-          // this.source = this.audioCtx.createBufferSource();
-          // this.source.connect(this.audioCtx.destination);
-
-          // if (this.interval) {
-          //   this.source.stop();
-          //   clearInterval(this.interval);
-          // }
-          // this.source.buffer = data;
-
-          // this.idx = 0;
-          // this.interval = setInterval(() => {
-          //   this.drawCircle(this.amps[this.idx]);
-
-          //   if (this.idx === 0) {
-          //     //this.source.start();
-          //   }
-
-          //   this.idx += data.sampleRate * 0.016;
-          //   if (this.idx >= this.amps.length) {
-          //     this.source.stop();
-          //     clearInterval(this.interval);
-          //     return;
-          //   }
-          // }, 16);
         });
     }
     fr.readAsArrayBuffer(event.target.files[0]);
   }
 
+  onUpdate() {
+    if (!this.audio || !this.amps) {
+      this.drawCircle(0);
+      return;
+    }
+
+    this.draw();
+  }
+
   rad = 0;
+
+  draw() {
+    let last_idx = this.idx;
+    let prog = this.audio.nativeElement.currentTime / this.audio.nativeElement.duration;
+    this.idx = Math.floor(this.amps.length * prog);
+
+    this.rad = .9 * this.rad + .1 * this.amps[this.idx];
+
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.w, this.w);
+
+    this.drawSpiral(last_idx, this.idx);
+    this.drawCircle(this.rad);
+  }
+
+  spirals: Spiral[] = [];
+  t: number = 0;
+
+  drawSpiral(i1: number, i2: number) {
+    let dt = (i2 - i1) * this.rad / this.rate;
+
+    this.spirals.forEach(
+      (s: Spiral) => {
+        s.r -= dt * this.w / 2;
+        s.theta = (s.theta + dt * Math.PI / 2) % (2 * Math.PI);
+      }
+    );
+
+    this.spirals = this.spirals.filter((s: Spiral) => s.r > 0);
+
+    for (let i = Math.floor(this.t * 25), n = Math.floor((this.t + dt) * 25); i < n; i++) {
+      this.spirals.push({ r: Math.random() * this.w, theta: Math.random() * 2 * Math.PI });
+    }
+    this.t += dt;
+
+    this.spirals.forEach(
+      (s: Spiral) => {
+        let trail_dt = dt;
+        let dr = -trail_dt * this.w / 2;
+        let dtheta = trail_dt * Math.PI / 2;
+
+        let trail = [3, 2, 2, 1, 1];
+        trail.forEach(
+          (t_r: number, i: number) => {
+            let r = s.r - i * dr;
+            let theta = s.theta - i * dtheta;
+
+            this.ctx.beginPath();
+            this.ctx.arc(
+              this.w / 2 + r * Math.cos(theta),
+              this.w / 2 + r * Math.sin(theta),
+              t_r, 0, 2 * Math.PI
+            );
+            this.ctx.fillStyle = 'red';
+            this.ctx.fill();
+          }
+        );
+      }
+    );
+  }
 
   drawCircle(r: number) {
     if (this.ctx) {
-      let w = this.ctx.canvas.width;
-      let h = this.ctx.canvas.height;
-
-      this.ctx.clearRect(0, 0, w, h);
-
-      this.rad = .9 * this.rad + .1 * r;
-
       this.ctx.beginPath();
-      this.ctx.arc(w / 2, h / 2, (Math.min(w, h) / 2 - 5) * this.rad + 4, 0, 2 * Math.PI, false);
+      this.ctx.arc(this.w / 2, this.w / 2,
+        (this.w / 2 - 5) * r + 4, 0, 2 * Math.PI);
       this.ctx.fillStyle = 'green';
       this.ctx.fill();
-      this.ctx.lineWidth = 5;
-      this.ctx.strokeStyle = '#003300';
-      this.ctx.stroke();
     }
   }
 }
