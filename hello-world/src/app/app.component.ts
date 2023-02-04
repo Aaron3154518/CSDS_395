@@ -5,6 +5,13 @@ interface Spiral {
   theta: number;
 };
 
+interface Rain {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -92,6 +99,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     this.ctx.fillRect(0, 0, this.w, this.w);
 
     this.drawSpiral(last_idx, this.idx);
+    this.drawRain(last_idx, this.idx);
     this.drawCircle(this.rad);
   }
 
@@ -139,6 +147,40 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         );
       }
     );
+  }
+
+  rain: Rain[] = [];
+  ay: number = 100;
+
+  drawRain(i1: number, i2: number) {
+    let dt = (i2 - i1) / this.rate;
+
+    this.rain.forEach((r: Rain) => {
+      r.x += r.vx * dt;
+      r.y += r.vy * dt + .5 * this.ay * dt * dt;
+      r.vy += this.ay * dt;
+    });
+
+    this.rain = this.rain.filter((r: Rain) => r.y < this.w);
+
+    let last_rad = (this.rad - .1 * this.amps[i2]) / .9;
+    let dr = (this.rad - last_rad) / dt;
+    for (let i = 0; i < Math.floor(dr * dr); i++) {
+      let theta = Math.random() * Math.PI / 4;
+      let v = 150;
+      this.rain.push(
+        {
+          x: this.w / 2, y: this.w / 2,
+          vx: v * Math.cos(theta) * (Math.random() >= .5 ? 1 : -1),
+          vy: -v * Math.sin(theta)
+        }
+      );
+    }
+
+    this.ctx.fillStyle = "blue";
+    this.rain.forEach((r: Rain) => {
+      this.ctx.fillRect(r.x - 5, r.y - 5, 10, 10);
+    });
   }
 
   drawCircle(r: number) {
