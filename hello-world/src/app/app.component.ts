@@ -1,4 +1,5 @@
 import { Component, ViewChild, AfterViewInit, OnDestroy, ElementRef, SimpleChange } from '@angular/core';
+import { SpotifyService } from './spotify.service';
 
 interface Spiral {
   r: number;
@@ -35,6 +36,8 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   source: AudioBufferSourceNode;
   rate: any;
 
+  constructor(private spotifyService: SpotifyService) { }
+
   ngOnDestroy() {
     if (this.interval) {
       this.source.stop();
@@ -48,6 +51,12 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.ctx = ctx;
       this.ctx.canvas.width = this.ctx.canvas.height = this.w;
     }
+
+    this.spotifyService.getQuery('track/0GjEhVFGZW8afUYGChu3Rr').subscribe((data) => {
+      console.log(data)
+    }, (error) => {
+      console.log("Error ", error);
+    });
   }
 
   onPlay() {
