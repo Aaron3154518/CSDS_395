@@ -52,11 +52,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.ctx.canvas.width = this.ctx.canvas.height = this.w;
     }
 
-    this.spotifyService.getQuery('track/0GjEhVFGZW8afUYGChu3Rr').subscribe((data) => {
-      console.log(data)
-    }, (error) => {
-      console.log("Error ", error);
-    });
+    // this.spotifyService.getQuery('track/0GjEhVFGZW8afUYGChu3Rr').subscribe((data) => {
+    //   console.log(data)
+    // }, (error) => {
+    //   console.log("Error ", error);
+    // });
   }
 
   onPlay() {
