@@ -1,10 +1,12 @@
 <div>
   <router-outlet></router-outlet>
-  <br>
+  <br />
+  <button routerLink="/main">View Playlist</button>
+  <br />
   <p>Hello World</p>
   <audio #MyAudio (play)="onPlay()" controls></audio>
-  <br>
-  <input type="file" (change)="fileChange($event)">
-  <br>
+  <br />
+  <input type="file" (change)="fileChange($event)" />
+  <br />
   <canvas #MyCanvas style="width: 500px; height: 500px"></canvas>
 </div>
