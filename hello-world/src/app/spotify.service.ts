@@ -10,12 +10,6 @@ import {
   timeInterval,
 } from 'rxjs';
 
-declare global {
-  interface Window {
-    code: Subject<string>;
-  }
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -118,26 +112,22 @@ export class SpotifyService {
   private getCode(callback: () => void, subject: Subject<void>) {
     console.log('Get Code');
 
-    window.code = new Subject<string>();
     let newwindow = window.open(
       'http://localhost:4200/login',
       'Login',
       'height=400,width=550'
     );
     if (newwindow) {
-      window.code.asObservable().subscribe({
-        next: (code: string) => {
-          this.ngZone.run(() => {
-            this.code = code;
+      window.addEventListener("message", (event) => {
+        if (event.origin !== "http://127.0.0.1:4200")
+          return;
+      
+        this.ngZone.run(() => {
+          this.code = event.data;
 
-            callback();
-          });
-        },
-        error: (err: any) => {
-          subject.error(err);
-        },
-      });
-      newwindow.code = window.code;
+          callback();
+        });
+      }, false);
     }
   }
 }

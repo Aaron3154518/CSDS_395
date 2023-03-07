@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "font-awesome": "^4.7.0",
+    "rxjs": "^7.8.0",
     "wavefile": "^11.0.0"
-  }
+  },
+  "type": "module"
 }

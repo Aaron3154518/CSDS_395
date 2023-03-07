@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
 
+interface Song {
+  id: string;
+  name: string;
+  artists: string[];
+  album: string;
+};
+
 @Component({
   selector: 'app-song-list',
   templateUrl: './song-list.component.html',
   styleUrls: ['./song-list.component.css'],
 })
 export class SongListComponent implements OnInit {
-  songs: string[] = ['Song1', 'Song2', 'Song3'];
+  songs: Song[] = [];
   i: number = 4;
 
   constructor(private spotifyService: SpotifyService) {}
@@ -15,14 +22,17 @@ export class SongListComponent implements OnInit {
   ngOnInit() {
     this.spotifyService.query('me/playlists').subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spotifyService.query(`playlists/${data.items[0].id}`).subscribe({
           next: (data: any) => {
             console.log(data);
             this.songs = data.tracks.items.map(
-              (track: any) => track.track.name
+              (track: any) => <Song>{ 
+                id: track.track.id,
+                name: track.track.name,
+                artists: track.track.artists.map((a: any) => a.name),
+                album: track.track.album.name,
+              }
             );
-            console.log(this.songs);
           },
           error: (err: any) => {
             console.log(err);

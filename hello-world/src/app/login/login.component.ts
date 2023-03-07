@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     if (!code) {
       this.spotifyService.login();
     } else {
-      (<Window>window.opener).code.next(code);
+      (<Window>window.opener).postMessage(code, 'http://localhost:4200');
       window.close();
     }
   }
