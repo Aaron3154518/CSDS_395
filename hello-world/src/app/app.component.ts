@@ -1,13 +1,6 @@
-import {
-  Component,
-  ViewChild,
-  AfterViewInit,
-  OnDestroy,
-  ElementRef,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { SpotifyService } from './spotify.service';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 
+/*
 interface Spiral {
   r: number;
   theta: number;
@@ -19,13 +12,15 @@ interface Rain {
   vx: number;
   vy: number;
 }
+*/
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit {
+  /*
   @ViewChild('MyCanvas')
   canvas: ElementRef<HTMLCanvasElement>;
   ctx: CanvasRenderingContext2D;
@@ -42,16 +37,21 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   buff: AudioBuffer;
   source: AudioBufferSourceNode;
   rate: any;
+  */
 
-  constructor(private router: Router, private spotifyService: SpotifyService) {}
+  constructor() {}
 
+  ngOnInit(): void {}
+
+  /*
   ngOnDestroy() {
     if (this.interval) {
       this.source.stop();
       clearInterval(this.interval);
     }
-  }
+  }*/
 
+  /*
   ngAfterViewInit() {
     let ctx = this.canvas.nativeElement.getContext('2d');
     if (ctx) {
@@ -59,7 +59,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.ctx.canvas.width = this.ctx.canvas.height = this.w;
     }
   }
+  */
 
+  /*
   onPlay() {
     this.interval = setInterval(() => {
       this.onUpdate();
@@ -211,4 +213,5 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.ctx.fill();
     }
   }
+  */
 }

@@ -4,11 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { SongListComponent } from './song-list/song-list.component';
 import { SongComponent } from './song/song.component';
+import { IndexComponent } from './index/index.component';
 
 const routes: Routes = [
-  //{ path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'main', component: SongListComponent },
+  { path: 'playlists', component: SongListComponent },
   { path: 'song/:id', component: SongComponent },
 ];
 
