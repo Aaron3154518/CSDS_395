@@ -6,7 +6,7 @@ interface Song {
   name: string;
   artists: string[];
   album: string;
-};
+}
 
 @Component({
   selector: 'app-song-list',
@@ -24,14 +24,14 @@ export class SongListComponent implements OnInit {
       next: (data: any) => {
         this.spotifyService.query(`playlists/${data.items[0].id}`).subscribe({
           next: (data: any) => {
-            console.log(data);
             this.songs = data.tracks.items.map(
-              (track: any) => <Song>{ 
-                id: track.track.id,
-                name: track.track.name,
-                artists: track.track.artists.map((a: any) => a.name),
-                album: track.track.album.name,
-              }
+              (track: any) =>
+                <Song>{
+                  id: track.track.id,
+                  name: track.track.name,
+                  artists: track.track.artists.map((a: any) => a.name),
+                  album: track.track.album.name,
+                }
             );
           },
           error: (err: any) => {

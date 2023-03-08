@@ -6,8 +6,31 @@ import {
   ViewChild,
 } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SpotifyService } from '../spotify.service';
+
+interface Song {
+  duration: number;
+  num_samples: number;
+  sample_rate: number;
+  loudness: number;
+  beats: number[];
+  segments: Segment[];
+}
+
+interface Segment {
+  t: number;
+  loud_min: number;
+  loud_max: number;
+}
+
+interface Circle {
+  cx: number;
+  cy: number;
+  r_factor: number;
+  t_factor: number;
+  color: string;
+}
 
 @Component({
   selector: 'app-song',
@@ -22,13 +45,27 @@ export class SongComponent implements OnInit, AfterViewInit {
   id: string = '';
   show: boolean = false;
   url: SafeResourceUrl;
-  beats: number[] = [];
 
   embedController: any;
 
   paused: boolean = true;
   progress: number = 0;
-  duration: number = 0;
+  song: Song = {
+    duration: 0,
+    num_samples: 0,
+    sample_rate: 0,
+    loudness: 0,
+    beats: [],
+    segments: [],
+  };
+  circles: Circle[] = [];
+  circle: Circle = {
+    cx: 0.5,
+    cy: 0.5,
+    r_factor: 1,
+    t_factor: 0,
+    color: 'red',
+  };
 
   interval: NodeJS.Timer;
 
@@ -50,8 +87,19 @@ export class SongComponent implements OnInit, AfterViewInit {
     this.spotifyService.query(`audio-analysis/${this.id}`).subscribe({
       next: (data: any) => {
         console.log(data);
-        this.beats = data.beats.map((b: any) => b.start);
-        this.showSong(this.id);
+        this.song.duration = data.track.duration;
+        this.song.num_samples = data.track.num_samples;
+        this.song.sample_rate = data.track.analysis_sample_rate;
+        this.song.loudness = data.track.loudness;
+        this.song.beats = data.beats.map((b: any) => b.start);
+        this.song.segments = data.segments.map(
+          (s: any) =>
+            <Segment>{
+              t: s.start,
+              loud_min: s.loudness_start,
+              loud_max: s.loudness_max,
+            }
+        );
       },
       error: (err: any) => {
         console.log(err);
@@ -73,7 +121,6 @@ export class SongComponent implements OnInit, AfterViewInit {
         this.embedController.addListener('playback_update', (e: any) => {
           this.paused = e.data.isPaused;
           this.progress = e.data.position / e.data.duration;
-          this.duration = e.data.duration;
         });
 
         this.showSong(this.id);
@@ -90,23 +137,71 @@ export class SongComponent implements OnInit, AfterViewInit {
     let ctx = this.canvas.nativeElement.getContext('2d');
     if (ctx) {
       this.ctx = ctx;
-      this.ctx.beginPath();
-      this.ctx.fillRect(0, 0, 100, 100);
+      this.circles = Array.from(
+        { length: Math.floor(Math.random() * 10 + 10) },
+        () =>
+          <Circle>{
+            cx: Math.random() * 0.9 + 0.05,
+            cy: Math.random() * 0.9 + 0.05,
+            r_factor: Math.random() * 0.3 + 0.05,
+            t_factor: 0,
+            color: 'green',
+          }
+      );
     }
   }
 
   onUpdate() {
     if (!this.paused) {
-      this.progress += 30 / this.duration;
-      let t: number = this.progress * this.beats[this.beats.length - 1];
-      let i: number = this.beats.findIndex((b: number) => b > t);
-      let b1: number = i == 0 ? 0 : this.beats[i - 1];
-      let b2: number =
-        i == -1 ? this.beats[this.beats.length - 1] : this.beats[i];
-      let beatProg: number = (t - b1) / (b2 - b1);
+      this.progress += 0.03 / this.song.duration;
+      let [b1, b2, p]: [number, number, number] = this.find(
+        this.progress * this.song.duration,
+        this.song.beats
+      );
+      p = p / 3 + 0.25;
+      let [s1, s2, p2]: [Segment, Segment, number] = this.find(
+        this.progress * this.song.duration,
+        this.song.segments,
+        (v: Segment) => v.t
+      );
+      let w: number = this.ctx.canvas.clientWidth;
+      let h: number = this.ctx.canvas.clientHeight;
+      let m: number = Math.max(w, h);
+      this.ctx.canvas.width = (w * 1000) / m;
+      this.ctx.canvas.height = (h * 1000) / m;
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-      this.drawCircle(beatProg / 3 + 0.25);
+      let new_t_factor: number =
+        this.song.loudness / ((s1.loud_max - s1.loud_min) * p2 + s1.loud_min);
+      this.circle.t_factor *= 0.975;
+      if (new_t_factor > this.circle.t_factor) {
+        this.circle.t_factor = new_t_factor;
+      }
+      this.drawCircle(this.circle);
+      this.circles.forEach((c: Circle) => {
+        c.t_factor *= 0.75;
+        c.t_factor += 0.25 * p;
+        this.drawCircle(c);
+      });
     }
+  }
+
+  find<T>(
+    t: number,
+    arr: T[],
+    get_t: (v: T) => number = (v) => v as number
+  ): [T, T, number] {
+    let v0: T = arr[0];
+    if (t < get_t(v0)) {
+      return [v0, v0, t / get_t(v0)];
+    }
+    v0 = arr[arr.length - 1];
+    if (t >= get_t(v0)) {
+      return [v0, v0, 1];
+    }
+    let i: number = arr.findIndex((v: any) => get_t(v) > t);
+    v0 = arr[i - 1];
+    let v1: T = arr[i];
+    return [v0, v1, (t - get_t(v0)) / (get_t(v1) - get_t(v0))];
   }
 
   showSong(id: string) {
@@ -115,13 +210,20 @@ export class SongComponent implements OnInit, AfterViewInit {
     }
   }
 
-  drawCircle(r: number) {
+  drawCircle(c: Circle) {
     if (this.ctx) {
       let w: number = this.ctx.canvas.width;
       let h: number = this.ctx.canvas.height;
+      let r: number = Math.min(w, h) / 2;
       this.ctx.beginPath();
-      this.ctx.arc(w / 2, h / 2, Math.min(w, h) * r, 0, 2 * Math.PI);
-      this.ctx.fillStyle = 'green';
+      this.ctx.arc(
+        c.cx * w,
+        c.cy * h,
+        r * c.r_factor * c.t_factor,
+        0,
+        2 * Math.PI
+      );
+      this.ctx.fillStyle = c.color;
       this.ctx.fill();
     }
   }
