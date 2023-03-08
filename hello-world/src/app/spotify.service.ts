@@ -118,16 +118,19 @@ export class SpotifyService {
       'height=400,width=550'
     );
     if (newwindow) {
-      window.addEventListener("message", (event) => {
-        if (event.origin !== "http://127.0.0.1:4200")
-          return;
-      
-        this.ngZone.run(() => {
-          this.code = event.data;
+      window.addEventListener(
+        'message',
+        (event) => {
+          if (event.origin !== 'http://127.0.0.1:4200') return;
 
-          callback();
-        });
-      }, false);
+          this.ngZone.run(() => {
+            this.code = event.data;
+
+            callback();
+          });
+        },
+        false
+      );
     }
   }
 }

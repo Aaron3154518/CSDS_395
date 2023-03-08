@@ -1,10 +1,14 @@
 <p>song-list works!</p>
-<div *ngFor="let song of songs">
-    <div class="song">
-    <p class="song_name">{{song.name}}</p>
-    <p>{{song.artists}} - {{song.album}}</p>
-    <i class="fa fa-cog fa-spin"></i>
-    <br>
-    <a class="fa-solid fa-play" href="/song?id={{song}}">y</a>
-</div>
+<div class="container">
+  <div class="row" *ngFor="let song of songs">
+    <div class="col-xs-6">
+      <p class="song_name">{{ song.name }}</p>
+      <p>{{ song.artists }} - {{ song.album }}</p>
+    </div>
+    <div class="col-xs-6">
+      <a routerLink="/song/{{ song.id }}"
+        ><fa-icon [icon]="['fas', 'play']"></fa-icon
+      ></a>
+    </div>
+  </div>
 </div>
