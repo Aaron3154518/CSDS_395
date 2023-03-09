@@ -203,7 +203,7 @@ export class SongListComponent implements OnInit {
   constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit() {
-    return;
+    //return;
     this.spotifyService.query('me/playlists').subscribe({
       next: (data: any) => {
         this.playlists = data.items.slice(0, 5).map(
