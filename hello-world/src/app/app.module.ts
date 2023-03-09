@@ -14,6 +14,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SongComponent } from './song/song.component';
 import { IndexComponent } from './index/index.component';
+import { RecommenderComponent } from './recommender/recommender.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { IndexComponent } from './index/index.component';
     LoginComponent,
     SongComponent,
     IndexComponent,
+    RecommenderComponent,
   ],
   imports: [CommonModule, BrowserModule, AppRoutingModule, FontAwesomeModule],
   providers: [],
