@@ -1,14 +1,25 @@
-<p>song-list works!</p>
-<div class="container">
-  <div class="row" *ngFor="let song of songs">
-    <div class="col-xs-6">
-      <p class="song_name">{{ song.name }}</p>
-      <p>{{ song.artists }} - {{ song.album }}</p>
-    </div>
-    <div class="col-xs-6">
-      <a routerLink="/song/{{ song.id }}"
-        ><fa-icon [icon]="['fas', 'play']"></fa-icon
-      ></a>
+<h2 class="title">Playlists</h2>
+
+<div *ngFor="let pl of playlists">
+  <button class="header-btn" (click)="collapsed[pl.id] = !collapsed[pl.id]">
+    <fa-icon
+      class="header-icon"
+      [icon]="['fas', collapsed[pl.id] ? 'angle-right' : 'angle-down']"
+    ></fa-icon>
+    <h3 class="header-name">{{ pl.name }}</h3>
+  </button>
+
+  <div class="container" [hidden]="collapsed[pl.id]">
+    <div class="row" *ngFor="let song of pl.songs">
+      <div class="col-xs-6">
+        <p class="song_name">{{ song.name }}</p>
+        <p>{{ song.artists }} - {{ song.album }}</p>
+      </div>
+      <div class="col-xs-6">
+        <a routerLink="/song/{{ song.id }}"
+          ><fa-icon [icon]="['fas', 'play']"></fa-icon
+        ></a>
+      </div>
     </div>
   </div>
 </div>

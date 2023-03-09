@@ -1,8 +1,33 @@
+.title {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 1%;
+  padding: 1%;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: rgba(175, 200, 225, 64);
+}
+
+.header-name {
+  display: inline-block;
+  margin: 0;
+}
+
+.header-icon {
+  margin-right: 1%;
+}
+
+.header-btn {
+  border: 1% solid black;
+  padding: 1%;
+  text-align: start;
+  width: 100%;
+}
+
 .song {
-    border-style: dashed;
-    padding: 0;
+  padding: 0;
 }
 
 .song_name {
-    font-weight: bold;
+  font-weight: bold;
 }
