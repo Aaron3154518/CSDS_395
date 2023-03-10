@@ -18,6 +18,7 @@ import { IndexComponent } from './index/index.component';
 import { SearchComponent } from './search/search.component';
 import { RecommenderComponent } from './recommender/recommender.component';
 import { SongsComponent } from './songs/songs.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { SongsComponent } from './songs/songs.component';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
