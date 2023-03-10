@@ -13,7 +13,8 @@ def main():
     #Intput: weights, song title, artist, spotify id(optional)
     #args = sys.argv[1:]
     weights = [1,1,1,1,1,1,1,1,1,1]
-    args = [weights,"Never Gonna Give You Up", "Rick Astley"]
+    args = [weights] + sys.argv[1:]
+
 
     df = pd.read_csv('scripts/SpotifyFeatures.csv')
     df.drop(columns=['duration_ms'])
@@ -25,9 +26,10 @@ def main():
     #df['genre_indicator'] = 0
 
     #Finds the song being searched for
-    search_song = df.loc[(df.loc[:, 'track_name'] == args[1]) & (df.loc[:, 'artist_name'] == args[2])]
-    if len(args)>3:
-        search_song = df.loc[df.loc[:, 'track_id'] == args[3]]
+    if len(args)==2:
+        search_song = df.loc[df.loc[:, 'track_id'] == args[1]]
+    else:
+        search_song = df.loc[(df.loc[:, 'track_name'] == args[1]) & (df.loc[:, 'artist_name'] == args[2])]
 
     #...   
     search_song.loc[:, 'genre_indicator'] = 1
@@ -41,7 +43,7 @@ def main():
 
         #Make variables to indicate if the songs have similar genres and artists
         df.loc[:, 'genre_indicator'] = np.where(df.loc[:, 'genre']==row_df.loc[:, 'genre'].to_numpy()[0],1,df.loc[:, 'genre_indicator'])
-        df.loc[:, 'artist_indicator'] = np.where(df.loc[:, 'artist_name']==row_df.loc[:, 'artist_name'].to_numpy()[0],1,0)
+        df.loc[:, 'artist_indicator'] = np.where(df.loc[:, 'artist_name']==row_df.loc[:, 'artist_name'].to_numpy()[0],0,0)
         #...
         temp_arr.append(row_df)
 
@@ -58,8 +60,8 @@ def main():
 
     
     #Need to figure out output...
-    with open('output.txt', 'w') as f:
-        f.write(final.head(10).to_string())
+    # with open('output.txt', 'w') as f:
+    #     f.write(final.head(10).to_string())
 
     ids = final.head(10).loc[:, 'track_id'].to_list()
     scores = final.head(10).loc[:, 'sim score'].to_list()

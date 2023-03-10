@@ -43,6 +43,8 @@ export class SongComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
 
   id: string = '';
+  name: string = '';
+  artist: string = '';
   show: boolean = false;
   url: SafeResourceUrl;
 
@@ -104,6 +106,13 @@ export class SongComponent implements OnInit, AfterViewInit {
       error: (err: any) => {
         console.log(err);
       },
+    });
+    this.spotifyService.query(`tracks/${this.id}`).subscribe({
+      next: (data: any) => {
+        this.name = data.name;
+        this.artist = data.artists[0].name;
+      },
+      error: (err: any) => console.log(err),
     });
 
     // @ts-ignore

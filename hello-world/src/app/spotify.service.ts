@@ -193,7 +193,7 @@ export class SpotifyService {
       ],
     },
   ]);
-  private $playlists: Observable<Playlist[]> = this.playlists.asObservable();
+  private $playlists: Observable<Playlist[]>; // = this.playlists.asObservable();
 
   stringify(params: any) {
     return Object.entries(params)
