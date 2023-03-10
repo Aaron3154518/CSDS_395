@@ -243,7 +243,6 @@ export class SearchComponent implements OnInit {
           songs.map((s: SongFeatures) => getSongFeatures(s)),
           3
         );
-        console.log(this.clusters);
       },
       error: (err: any) => console.log(err),
     });
@@ -307,15 +306,16 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    let params: any = this.searchForm.value;
-    let track: string = params.track ? `track:${params.track}` : '';
-    let artist: string = params.artist ? `artist:${params.artist}` : '';
-    let year: string = params.year ? `year:${params.year}` : '';
+  search(args: any, offset: number = 0) {
+    let keys: any[] = Object.keys(args).filter((k: any) => args[k]);
+    let query_args: string = keys
+      ? `&q=${keys.map((k: any) => args[k]).join(' ')}`
+      : '';
     this.spotifyService
-      .query(`search?type=track&q=${[track, artist, year].join(' ')}'`)
+      .query(`search?offset=${offset}&type=track${query_args}'`)
       .subscribe({
         next: (data: any) => {
+          console.log(data);
           this.filter(
             data.tracks.items
               .filter((tr: any) => tr)
@@ -325,12 +325,20 @@ export class SearchComponent implements OnInit {
                     id: tr.id,
                     name: tr.name,
                     artists: tr.artists.map((ar: any) => ar.name),
-                    album: tr.album,
+                    album: tr.album.name,
                   }
               )
           );
         },
         error: (err: any) => console.log(err),
       });
+  }
+
+  onSubmit() {
+    this.search(this.searchForm.value);
+  }
+
+  onSurprise() {
+    this.search({}, Math.floor(Math.random() * 1000));
   }
 }
