@@ -1,0 +1,15 @@
+.input {
+  font-size: 2em;
+  border-radius: 2px;
+  margin: 2px 1px;
+}
+
+.input:hover {
+  background-color: rgba(200, 200, 200, 0.5);
+}
+
+.btn {
+  font-size: 2em;
+  margin: 2px 0px;
+  border: 1px solid black;
+}

@@ -23,17 +23,3 @@
   text-align: start;
   width: 100%;
 }
-
-.song {
-  padding: 0;
-}
-
-.song_name {
-  font-weight: bold;
-}
-
-.play-btn {
-  position: absolute;
-  top: 0;
-  transform: translateY(50%);
-}

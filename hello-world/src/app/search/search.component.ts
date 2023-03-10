@@ -216,6 +216,11 @@ export class SearchComponent implements OnInit {
     artist: '',
     year: undefined,
   });
+  err: { [key: string]: string } = {
+    track: '',
+    artist: '',
+    year: '',
+  };
 
   constructor(
     private formBuilder: FormBuilder,

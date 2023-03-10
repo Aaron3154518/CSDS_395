@@ -17,6 +17,7 @@ import { SongComponent } from './song/song.component';
 import { IndexComponent } from './index/index.component';
 import { SearchComponent } from './search/search.component';
 import { RecommenderComponent } from './recommender/recommender.component';
+import { SongsComponent } from './songs/songs.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RecommenderComponent } from './recommender/recommender.component';
     IndexComponent,
     SearchComponent,
     RecommenderComponent,
+    SongsComponent,
   ],
   imports: [
     CommonModule,
