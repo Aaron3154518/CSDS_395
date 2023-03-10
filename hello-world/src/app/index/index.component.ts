@@ -14,7 +14,12 @@ export class IndexComponent {
       responseType: 'text',
     });
     req.subscribe({
-      next: (data: any) => console.log('Data', data),
+      next: (data: string) => {
+        let d_split: string[] = data.split('\n');
+        let idxs: string[] = d_split[0].split(',');
+        let scores: number[] = d_split[1].split(',').map((s: string) => +s);
+        console.log(idxs, scores);
+      },
       error: (err: any) => console.log('Error', err),
     });
   }
