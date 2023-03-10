@@ -8,26 +8,6 @@ export interface Song {
   artists: string[];
   album: string;
 }
-
-// const uri = 'mongodb://localhost:27017';
-
-// const client = new MongoClient(uri);
-
-// async function run() {
-//   try {
-//     await client.connect();
-//     const database = client.db('senior_project');
-//     // Your database operations go here
-//   } catch (err) {
-//     console.error(err);
-//   } finally {
-//     await client.close();
-//   }
-// }
-
-// run();
-
-// console.log('Success');
 export interface Playlist {
   id: string;
   name: string;
