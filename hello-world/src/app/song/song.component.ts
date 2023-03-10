@@ -43,6 +43,7 @@ export class SongComponent implements OnInit, AfterViewInit {
   ctx: CanvasRenderingContext2D;
 
   id: string = '';
+  shown: string = '';
   name: string = '';
   artist: string = '';
   show: boolean = false;
@@ -85,34 +86,39 @@ export class SongComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
 
-    this.id = this.route.snapshot.params['id'];
-    this.spotifyService.query(`audio-analysis/${this.id}`).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.song.duration = data.track.duration;
-        this.song.num_samples = data.track.num_samples;
-        this.song.sample_rate = data.track.analysis_sample_rate;
-        this.song.loudness = data.track.loudness;
-        this.song.beats = data.beats.map((b: any) => b.start);
-        this.song.segments = data.segments.map(
-          (s: any) =>
-            <Segment>{
-              t: s.start,
-              loud_min: s.loudness_start,
-              loud_max: s.loudness_max,
-            }
-        );
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-    });
-    this.spotifyService.query(`tracks/${this.id}`).subscribe({
-      next: (data: any) => {
-        this.name = data.name;
-        this.artist = data.artists[0].name;
-      },
-      error: (err: any) => console.log(err),
+    this.route.params.subscribe((params: any) => {
+      this.id = this.route.snapshot.params['id'];
+      this.spotifyService.query(`audio-analysis/${this.id}`).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.song.duration = data.track.duration;
+          this.song.num_samples = data.track.num_samples;
+          this.song.sample_rate = data.track.analysis_sample_rate;
+          this.song.loudness = data.track.loudness;
+          this.song.beats = data.beats.map((b: any) => b.start);
+          this.song.segments = data.segments.map(
+            (s: any) =>
+              <Segment>{
+                t: s.start,
+                loud_min: s.loudness_start,
+                loud_max: s.loudness_max,
+              }
+          );
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+      });
+      this.spotifyService.query(`tracks/${this.id}`).subscribe({
+        next: (data: any) => {
+          this.name = data.name;
+          this.artist = data.artists[0].name;
+          console.log(this.name, this.artist);
+        },
+        error: (err: any) => console.log(err),
+      });
+
+      this.showSong(this.id);
     });
 
     // @ts-ignore
@@ -214,8 +220,9 @@ export class SongComponent implements OnInit, AfterViewInit {
   }
 
   showSong(id: string) {
-    if (this.embedController) {
+    if (this.embedController && this.shown != id) {
       this.embedController.loadUri(`spotify:track:${id}`);
+      this.shown = id;
     }
   }
 

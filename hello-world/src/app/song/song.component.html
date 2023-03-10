@@ -1,3 +1,10 @@
 <canvas #Visualizer class="vis"></canvas>
-<div style="style: inline" id="player"></div>
-<app-recommender [seedName]="name" [seedArtist]="artist"></app-recommender>
+<div class="player" id="player"></div>
+<br />
+<div style="overflow-y: auto; height: 250px; width: 500px">
+  <app-recommender
+    class="recommender"
+    [seedName]="name"
+    [seedArtist]="artist"
+  ></app-recommender>
+</div>

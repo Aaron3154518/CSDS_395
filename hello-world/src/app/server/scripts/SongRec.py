@@ -80,5 +80,9 @@ def cos_sim(a,b):
     return np.dot(a,b)/(norm(a)*norm(b))
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except:
+        print(" ")
+        print(" ")
 
