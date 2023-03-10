@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../spotify.service';
 // import { MongoClient } from 'mongodb';
 
-interface Song {
+export interface Song {
   id: string;
   name: string;
   artists: string[];
@@ -28,7 +28,7 @@ interface Song {
 // run();
 
 // console.log('Success');
-interface Playlist {
+export interface Playlist {
   id: string;
   name: string;
   songs: Song[];
