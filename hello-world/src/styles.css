@@ -1,9 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
 .title {
+  width: 100%;
   margin: 0;
   margin-bottom: 1%;
-  padding-bottom: 0.25%;
-  font-size: 3em;
-  border-bottom: 1px solid black;
-  background-color: rgba(200, 200, 255, 0.25);
+  padding: 1%;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: rgba(175, 200, 225, 64);
 }

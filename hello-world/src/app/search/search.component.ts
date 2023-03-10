@@ -306,13 +306,13 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  search(args: any, offset: number = 0) {
+  search(args: any, offset: number = 0, limit: number = 20) {
     let keys: any[] = Object.keys(args).filter((k: any) => args[k]);
     let query_args: string = keys
       ? `&q=${keys.map((k: any) => args[k]).join(' ')}`
       : '';
     this.spotifyService
-      .query(`search?offset=${offset}&type=track${query_args}'`)
+      .query(`search?type=track&offset=${offset}&limit=${limit}${query_args}'`)
       .subscribe({
         next: (data: any) => {
           console.log(data);
@@ -339,6 +339,6 @@ export class SearchComponent implements OnInit {
   }
 
   onSurprise() {
-    this.search({}, Math.floor(Math.random() * 1000));
+    this.search({}, Math.floor(Math.random() * 1000), 50);
   }
 }

@@ -62,7 +62,7 @@ export class SongComponent implements OnInit, AfterViewInit {
   circle: Circle = {
     cx: 0.5,
     cy: 0.5,
-    r_factor: 1,
+    r_factor: 0.75,
     t_factor: 0,
     color: 'red',
   };
