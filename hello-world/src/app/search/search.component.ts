@@ -243,6 +243,7 @@ export class SearchComponent implements OnInit {
           songs.map((s: SongFeatures) => getSongFeatures(s)),
           3
         );
+        console.log(this.clusters);
       },
       error: (err: any) => console.log(err),
     });
@@ -285,14 +286,12 @@ export class SearchComponent implements OnInit {
           s,
           min_dist(getSongFeatures(s), this.clusters)[1],
         ]);
-        console.log(order);
         order.sort(
           (
             [sa, da]: [SongFeatures, number],
             [sb, db]: [SongFeatures, number]
           ) => da - db
         );
-        console.log(songs);
         songs.sort((a: Song, b: Song) => {
           let oa: [SongFeatures, number] | undefined = order.find(
             ([s, d]: [SongFeatures, number]) => s.id == a.id
@@ -302,8 +301,6 @@ export class SearchComponent implements OnInit {
           );
           return !oa || !ob ? -1 : oa[1] - ob[1];
         });
-        console.log('->');
-        console.log(songs);
         this.songs = songs;
       },
       error: (err: any) => console.log(err),

@@ -27,7 +27,7 @@ export function kmeans(v: number[][], k: number): number[][] {
   let clusters: number[][] = [...Array(k).keys()].map(() => {
     let idx: number = Math.floor(Math.random() * idxs.length);
     let v_i: number[] = v[idxs[idx]];
-    delete idxs[idx];
+    idxs = idxs.slice(0, idx).concat(idxs.slice(idx + 1));
     return v_i;
   });
   for (let i: number = 0; i < 10; i++) {
@@ -40,7 +40,7 @@ export function kmeans(v: number[][], k: number): number[][] {
         .reduce(
           (arr: number[], i: number) =>
             arr.map((a: number, j: number) => a + v[i][j]),
-          Array(m).map(() => 0)
+          Array<number>(m).fill(0)
         )
         .map((v: number) => v / vs.length)
     );
