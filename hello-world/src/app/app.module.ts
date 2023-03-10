@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { SongComponent } from './song/song.component';
 import { IndexComponent } from './index/index.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -22,8 +24,16 @@ import { IndexComponent } from './index/index.component';
     LoginComponent,
     SongComponent,
     IndexComponent,
+    SearchComponent,
   ],
-  imports: [CommonModule, BrowserModule, AppRoutingModule, FontAwesomeModule],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    AppRoutingModule,
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

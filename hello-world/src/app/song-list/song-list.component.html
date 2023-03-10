@@ -16,8 +16,8 @@
         <p>{{ song.artists }} - {{ song.album }}</p>
       </div>
       <div class="col-xs-6">
-        <a routerLink="/song/{{ song.id }}"
-          ><fa-icon [icon]="['fas', 'play']"></fa-icon
+        <a class="play-btn" routerLink="/song/{{ song.id }}"
+          ><fa-icon [icon]="['fas', 'play']" class="fa-xl"></fa-icon
         ></a>
       </div>
     </div>

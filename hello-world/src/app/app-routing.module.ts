@@ -5,12 +5,14 @@ import { LoginComponent } from './login/login.component';
 import { SongListComponent } from './song-list/song-list.component';
 import { SongComponent } from './song/song.component';
 import { IndexComponent } from './index/index.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'login', component: LoginComponent },
   { path: 'playlists', component: SongListComponent },
   { path: 'song/:id', component: SongComponent },
+  { path: 'search', component: SearchComponent },
 ];
 
 @NgModule({

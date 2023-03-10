@@ -1,0 +1,13 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <input type="text" formControlName="track" placeholder="Track" />
+  <br />
+  <input type="text" formControlName="artist" placeholder="Artist" />
+  <br />
+  <input type="number" formControlName="year" placeholder="Year" />
+  <br />
+  <button class="button" type="submit">Search</button>
+</form>
+
+<div *ngFor="let song of songs">
+  <p>{{ song.name }}</p>
+</div>
