@@ -9,7 +9,7 @@ import { Song, Playlist } from './song-list/song-list.component';
 export class SpotifyService {
   static readonly URL: string = 'https://api.spotify.com/v1';
   static readonly CLIENT_ID: string = '5d369fb2e69e43e186efae6b4de10a68';
-  static readonly CLIENT_SECRET: string = 'b4502636b2684379add901bed496a7c4';
+  static readonly CLIENT_SECRET: string = 'c0b75dfd6d2349d281182cedcf632cbd';
   static readonly REDIRECT_URI: string = 'http://127.0.0.1:4200/login';
   code: string = '';
   token: string = '';
@@ -17,6 +17,7 @@ export class SpotifyService {
   private playlists: BehaviorSubject<Playlist[]> = new BehaviorSubject<
     Playlist[]
   >([
+    /*
     {
       id: '2qrclYWp26KWIcs2fRgdVD',
       name: 'Actual Songs',
@@ -192,6 +193,7 @@ export class SpotifyService {
         },
       ],
     },
+  */
   ]);
   private $playlists: Observable<Playlist[]>; // = this.playlists.asObservable();
 

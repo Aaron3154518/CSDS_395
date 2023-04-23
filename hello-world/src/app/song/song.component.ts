@@ -22,6 +22,7 @@ interface Segment {
   t: number;
   loud_min: number;
   loud_max: number;
+  pitches: number[];
 }
 
 interface Circle {
@@ -102,6 +103,7 @@ export class SongComponent implements OnInit, AfterViewInit {
                 t: s.start,
                 loud_min: s.loudness_start,
                 loud_max: s.loudness_max,
+                pitches: s.pitches,
               }
           );
         },
@@ -166,6 +168,36 @@ export class SongComponent implements OnInit, AfterViewInit {
     }
   }
 
+  getColor(p1: number[], p2: number[], f: number): string {
+    let p: number[] = p1.map((p: number, i: number) => (p2[i] - p) * f + p);
+    let colors: number[][] = [
+      [128, 128, 128],
+      [255, 192, 203],
+      [255, 0, 0],
+      [255, 127, 0],
+      [255, 255, 0],
+      [0, 255, 0],
+      [0, 255, 255],
+      [0, 0, 255],
+      [75, 0, 130],
+      [148, 0, 211],
+      [150, 75, 0],
+      [0, 0, 0],
+    ];
+    let color: number[] = p.reduce(
+      (c: number[], p: number, i: number) =>
+        c.map((c, j) => c + colors[i][j] * p),
+      [0, 0, 0]
+    );
+    let max_c = Math.max(...color) / 255;
+    color = color.map((c) => (c = Math.floor(c / max_c)));
+    let hex: string = `#${color
+      .map((c) => c.toString(16))
+      .map((c) => (c.length == 2 ? c : `0${c}`))
+      .join('')}`;
+    return hex;
+  }
+
   onUpdate() {
     if (!this.paused) {
       this.progress += 0.03 / this.song.duration;
@@ -179,6 +211,7 @@ export class SongComponent implements OnInit, AfterViewInit {
         this.song.segments,
         (v: Segment) => v.t
       );
+      this.circle.color = this.getColor(s1.pitches, s2.pitches, p2);
       let w: number = this.ctx.canvas.clientWidth;
       let h: number = this.ctx.canvas.clientHeight;
       let m: number = Math.max(w, h);
@@ -209,14 +242,16 @@ export class SongComponent implements OnInit, AfterViewInit {
     if (t < get_t(v0)) {
       return [v0, v0, t / get_t(v0)];
     }
-    v0 = arr[arr.length - 1];
+    v0 = arr[arr.length - 2];
     if (t >= get_t(v0)) {
-      return [v0, v0, 1];
+      return [v0, arr[arr.length - 1], 1];
     }
     let i: number = arr.findIndex((v: any) => get_t(v) > t);
-    v0 = arr[i - 1];
-    let v1: T = arr[i];
-    return [v0, v1, (t - get_t(v0)) / (get_t(v1) - get_t(v0))];
+    v0 = arr[i];
+    let v1: T = arr[i + 1];
+    let t0 = get_t(arr[i - 1]);
+    let t1 = get_t(arr[i]);
+    return [v0, v1, (t - t0) / (t1 - t0)];
   }
 
   showSong(id: string) {
