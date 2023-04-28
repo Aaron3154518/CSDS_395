@@ -47,4 +47,5 @@ if __name__ == "__main__":
 
 	parser.set_defaults(framesize=1024, hop=128)
 	args = parser.parse_args()
-	run_beat_detection(args.path, args.framesize, args.hop)
+	beat_estimate = run_beat_detection(args.path, args.framesize, args.hop)
+	print(beat_estimate)
