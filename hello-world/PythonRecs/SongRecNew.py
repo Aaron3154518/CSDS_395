@@ -6,6 +6,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.decomposition import PCA
+import pymongo
+from pymongo import MongoClient
 
 #To do: figure out Input output needs for website and adapt
 #Add functionality that handles more recent songs and songs not in DB
@@ -73,17 +75,23 @@ def main_1():
     weights = [1,1,1,1,1,1,1,1,1,1]
     song = ['Shake It Off', 'Taylor Swift'] #this is just temp
 
-    df = pd.read_csv('SpotifyFeatures.csv')
+    #df = pd.read_csv('SpotifyFeatures.csv')
 
+    cluster = MongoClient("mongodb+srv://vxs324:Senior2023@seniorproject.nag0hxc.mongodb.net/test")
+    db = cluster["spotifyData"]
+    collection=db["Song"]
     
     #This expands the dataset to be 51 features making dummy variables for genre
 
+    data = list(collection.find())
+    df = pd.DataFrame(data)
+
     df = data_clean(df)
     search_song = df.loc[(df['track_name'] == song[0]) & (df['artist_name'] == song[1])]
-    search_song = search_song.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key'])
-
+    search_song = search_song.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+    #print(df_1)
     #drop song specific data and non-numeric values
-    df = df.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key'])
+    df = df.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
     scaler_1, pca_1, reduced_1 = run_pca(df,0.9)
     song_std = scaler_1.transform(search_song)
     song1 = pca_1.transform(song_std)

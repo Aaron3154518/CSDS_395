@@ -9,7 +9,8 @@ from sklearn.decomposition import PCA
 import SongRecNew as sr
 
 def main_2():
-    print(1)
+    df = pd.read_csv('SpotifyFeatures.csv')
+    
 
 
 
