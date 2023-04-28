@@ -1,0 +1,9 @@
+.title-text {
+  font-weight: bold;
+  display: inline;
+}
+
+.excl {
+  font-weight: bold;
+  color: rgb(255, 165, 165);
+}

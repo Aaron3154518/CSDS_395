@@ -1,0 +1,22 @@
+.song {
+  padding: 0;
+}
+
+.song_name {
+  font-weight: bold;
+}
+
+.play-btn {
+  position: absolute;
+  top: 0;
+  transform: translateY(50%);
+}
+
+.container {
+  margin: 0;
+  padding: 0 0 0 1%;
+}
+
+.zebra {
+  background-color: rgba(200, 200, 200, 0.5);
+}

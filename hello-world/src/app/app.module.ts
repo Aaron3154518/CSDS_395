@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SongListComponent } from './song-list/song-list.component';
 import { LoginComponent } from './login/login.component';
+
 import {
   FaIconLibrary,
   FontAwesomeModule,
@@ -17,6 +18,8 @@ import { SongComponent } from './song/song.component';
 import { IndexComponent } from './index/index.component';
 import { SearchComponent } from './search/search.component';
 import { RecommenderComponent } from './recommender/recommender.component';
+import { SongsComponent } from './songs/songs.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,7 @@ import { RecommenderComponent } from './recommender/recommender.component';
     IndexComponent,
     SearchComponent,
     RecommenderComponent,
+    SongsComponent,
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,7 @@ import { RecommenderComponent } from './recommender/recommender.component';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

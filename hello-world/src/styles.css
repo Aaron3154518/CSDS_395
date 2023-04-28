@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+.title {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 1%;
+  padding: 1%;
+  font-weight: bold;
+  border-radius: 10px;
+  background-color: rgba(175, 200, 225, 64);
+}
+
+.button {
+  margin: 2px 1px;
+  padding: 6px 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: rgba(128, 128, 255, 0.35);
+}

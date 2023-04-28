@@ -9,17 +9,5 @@
     <h3 class="header-name">{{ pl.name }}</h3>
   </button>
 
-  <div class="container" [hidden]="collapsed[pl.id]">
-    <div class="row" *ngFor="let song of pl.songs">
-      <div class="col-xs-6">
-        <p class="song_name">{{ song.name }}</p>
-        <p>{{ song.artists }} - {{ song.album }}</p>
-      </div>
-      <div class="col-xs-6">
-        <a class="play-btn" routerLink="/song/{{ song.id }}"
-          ><fa-icon [icon]="['fas', 'play']" class="fa-xl"></fa-icon
-        ></a>
-      </div>
-    </div>
-  </div>
+  <app-songs [songs]="pl.songs" [hidden]="collapsed[pl.id]"></app-songs>
 </div>
