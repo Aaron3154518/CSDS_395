@@ -1,0 +1,4 @@
+__pycache__
+*.csv
+output.txt
+SongRec.py

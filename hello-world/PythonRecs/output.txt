@@ -1,0 +1,11 @@
+                                                  track_name                track_id  sim score
+222057                               Never Gonna Give You Up  7GhIk7Il098yCjg4BQjzvb   1.000000
+20334                  Together Forever - Lover's Leap Remix  6ZiVaOE4ikIsYbuhVHizz9   0.996766
+222516                                        Ballroom Blitz  3Pu3IChaAoa5EjgUBv5F6x   0.928552
+154704                               La Calle De Las Sirenas  1SVm64B4Ry7dqFSxHY8e65   0.928533
+224452  That's The Way (I Like It) - 2004 Remastered Version  1qiQduM84A0VeH8Y2uAbqi   0.928335
+225170                                           Let It Ride  5Gt2lQfYlwEKlBLkK9jr5k   0.927682
+16558                                           La Gota Fría  5ZaTqcL7zIreaVNeVy89Iu   0.927210
+166499                   Me and Julio Down by the Schoolyard  6vxHp3CDNo0afgKGp2yi1E   0.927065
+156445            Get Down Tonight - 2004 Remastered Version  2qVZpGu1v98tvUAutqyAfJ   0.927009
+113495                                            Losing You  7mjOxXnZYbGtgjyX0hqaLs   0.926978
