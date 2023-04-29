@@ -1,3 +1,30 @@
+"use strict";
+/*import { MongoClient, Db } from 'mongodb';
+
+const uri = 'mongodb+srv://vxs324:Senior2023@seniorproject.nag0hxc.mongodb.net/test';
+
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB cluster');
+
+    const databases = await client.db().admin().listDatabases();
+
+    console.log('Databases in the cluster:');
+    for (const database of databases.databases) {
+      console.log(database.name);
+    }
+
+    await client.close();
+    console.log('Disconnected from MongoDB cluster');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+run();*/
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,33 +61,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var MongoClient = require('mongodb').MongoClient;
-var uri = 'mongodb+srv://vxs324:Senior2023@seniorproject.nag0hxc.mongodb.net/test';
-var client = new MongoClient(uri);
-function run() {
+exports.__esModule = true;
+var mongodb_1 = require("mongodb");
+function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var database, err_1;
+        var uri, client, database, collections, _i, collections_1, collection, err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, 3, 5]);
-                    return [4 /*yield*/, client.connect()];
+                    uri = 'mongodb+srv://vxs324:Senior2023@seniorproject.nag0hxc.mongodb.net/test';
+                    client = new mongodb_1.MongoClient(uri);
+                    _a.label = 1;
                 case 1:
-                    _a.sent();
-                    database = client.db("senior_project");
-                    return [3 /*break*/, 5];
+                    _a.trys.push([1, 5, , 6]);
+                    return [4 /*yield*/, client.connect()];
                 case 2:
-                    err_1 = _a.sent();
-                    console.error(err_1);
-                    return [3 /*break*/, 5];
-                case 3: return [4 /*yield*/, client.close()];
+                    _a.sent();
+                    console.log('Connected to MongoDB');
+                    database = client.db("spotifyData");
+                    ;
+                    return [4 /*yield*/, database.listCollections().toArray()];
+                case 3:
+                    collections = _a.sent();
+                    console.log('Collections in the database:');
+                    for (_i = 0, collections_1 = collections; _i < collections_1.length; _i++) {
+                        collection = collections_1[_i];
+                        console.log(collection.name);
+                    }
+                    return [4 /*yield*/, client.close()];
                 case 4:
                     _a.sent();
-                    return [7 /*endfinally*/];
-                case 5: return [2 /*return*/];
+                    console.log('Disconnected from MongoDB');
+                    return [3 /*break*/, 6];
+                case 5:
+                    err_1 = _a.sent();
+                    console.error(err_1);
+                    return [3 /*break*/, 6];
+                case 6: return [2 /*return*/];
             }
         });
     });
 }
-run();
-console.log("Success");
+main();
