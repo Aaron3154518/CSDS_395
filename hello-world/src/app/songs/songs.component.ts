@@ -8,4 +8,8 @@ import { Song } from '../song-list/song-list.component';
 })
 export class SongsComponent {
   @Input() songs: Song[] = [];
+
+  public get ids(): string[] {
+    return this.songs.map((s) => s.id);
+  }
 }

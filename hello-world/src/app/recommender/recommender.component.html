@@ -1,2 +1,5 @@
-<button class="button" (click)="findSimilar()">Find Similar Songs</button>
+<button *ngIf="showButton" class="button" (click)="findSimilar()">
+  <i class="fa fa-spinner fa-spin" [ngClass]="{ hide: !loading }"></i>
+  Find Similar Songs
+</button>
 <app-songs [songs]="songs"></app-songs>

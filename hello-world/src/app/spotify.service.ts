@@ -197,6 +197,8 @@ export class SpotifyService {
   ]);
   private $playlists: Observable<Playlist[]>; // = this.playlists.asObservable();
 
+  recommender_tracks: string[] = [];
+
   stringify(params: any) {
     return Object.entries(params)
       .map(([k, v]: [any, any]) => `${k}=${v}`)

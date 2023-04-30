@@ -11,19 +11,32 @@ const server = http.createServer(async (req, res) => {
     req.on("data", (data) => chunks.push(data));
     req.on("end", async () => {
       let args = chunks.toString().split(",");
-      console.log(args);
-      await PythonShell.run("scripts/SongRecNew.py", {
-        args: args,
-      }).then((data) => {
-        res.statusCode = 200;
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-        res.setHeader("Content-Type", "text/plain");
-        res.write(data[0]);
-        res.write("\n");
-        res.write(data[1]);
-        res.end();
-      });
+      let flag = args.splice(0, 1)[0];
+      console.log(flag, args);
+      res.statusCode = 200;
+      res.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+      res.setHeader("Access-Control-Allow-Methods", "GET, POST");
+      res.setHeader("Content-Type", "text/plain");
+      if (flag === "t") {
+        await PythonShell.run("scripts/SongRecNew.py", {
+          args: args,
+        }).then((data) => {
+          res.write(data[0]);
+          res.write("\n");
+          res.write(data[1]);
+        });
+      } else if (flag === "p") {
+        await PythonShell.run("scripts/TODO.py", {
+          args: args.join(","),
+        }).then((data) => {
+          res.write(data[0]);
+          res.write("\n");
+          res.write(data[1]);
+        });
+      } else {
+        res.statusCode = 404;
+      }
+      res.end();
     });
     return res;
   }

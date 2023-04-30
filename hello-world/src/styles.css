@@ -18,3 +18,7 @@
 .button:hover {
   background-color: rgba(128, 128, 255, 0.35);
 }
+
+.d-flex {
+  display: flex;
+}
