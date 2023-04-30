@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import numpy as np
+from random import choice
 from numpy.linalg import norm
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import StandardScaler
@@ -33,8 +34,15 @@ def naive_bayes(data):
 
 def main_2():
     #This is just a test I need more data
-    df = pd.read_csv('user1_PCA.csv')
-    df_cp = df.drop(columns=['track_id'],axis=1,inplace=False)
+    args = sys.argv[1:]
+    liked = args[0].split(',') #UPDATE FOR PROPER IO
+    #df = pd.read_csv('user1_PCA.csv')
+    #df_cp = df.drop(columns=['track_id'],axis=1,inplace=False)
+    df = pd.read_csv('SpotifyFeatures.csv')
+    songs = [choice(liked) for _ in range(5)]
+    dislikes = []
+    for i in songs: 
+        dislikes.append(sr.least_vec_cos(i,df_std))
     print(naive_bayes(df_cp))
     #df = sr.data_clean(df)
 
