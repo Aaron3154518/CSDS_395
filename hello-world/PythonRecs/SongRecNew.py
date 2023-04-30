@@ -53,16 +53,18 @@ def run_pca(data, perc):
 
 
 #Make sure to input PCA formated data
-def vec_cos(song,dta):
-    final = pd.read_csv('SpotifyFeatures.csv')
+def vec_cos(song,dta,fin_data):
+    #final = pd.read_csv('SpotifyFeatures.csv')
+    final = fin_data
     similarity_scores = cosine_similarity(dta, song[0].reshape(1,-1))
     final['sim_score'] = similarity_scores
     ret_songs = final[['track_name','artist_name','track_id','sim_score']].sort_values(by=['sim_score'], ascending=False)
     #change this for needed output
     return(ret_songs)
 
-def least_vec_cos(song,dta):
-    final = pd.read_csv('SpotifyFeatures.csv')
+def least_vec_cos(song,dta,fin_data):
+    final=fin_data
+    #final = pd.read_csv('SpotifyFeatures.csv')
     similarity_scores = cosine_similarity(dta, song.reshape(1,-1))
     final['sim_score'] = similarity_scores
     ret_songs_2 = final[['track_name','artist_name','track_id','sim_score']].sort_values(by=['sim_score'], ascending=True)
@@ -73,7 +75,8 @@ def main_1():
     #Intput: weights, song title, artist, spotify id(optional)
     args = sys.argv[1:]
     weights = [1,1,1,1,1,1,1,1,1,1]
-    song = args[0]
+    #song = args[0]
+    song = ["Free Bird", "Lynyrd Skynyrd"]
     #song = ['Shake It Off', 'Taylor Swift'] #this is just temp
 
     #df = pd.read_csv('SpotifyFeatures.csv')
@@ -86,9 +89,10 @@ def main_1():
 
     data = list(collection.find())
     df = pd.DataFrame(data)
+    data_og = df.copy()
 
     df = data_clean(df)
-    search_song = df.loc[(df['track_id'] == song[0]) ]
+    search_song = df.loc[(df['track_name'] == song[0]) & (df['artist_name'] == song[1])]
     search_song = search_song.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
     #print(df_1)
     #drop song specific data and non-numeric values
@@ -98,7 +102,7 @@ def main_1():
     song1 = pca_1.transform(song_std)
 
     #Change this for output of top songs
-    temp = vec_cos(song1,reduced_1)
+    temp = vec_cos(song1,reduced_1,data_og)
     ids = temp.head(10).loc[:, 'track_id'].to_list()
     scores = temp.head(10).loc[:,'sim_score'].to_list()
     print(','.join(ids))
