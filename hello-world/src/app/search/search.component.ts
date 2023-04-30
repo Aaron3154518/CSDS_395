@@ -4,6 +4,8 @@ import { SpotifyService } from '../spotify.service';
 import { kmeans, min_dist } from './cluster';
 import { Playlist, Song } from '../song-list/song-list.component';
 import { Observable, Subject } from 'rxjs';
+import { RecommenderComponent } from '../recommender/recommender.component';
+import { HttpEvent } from '@angular/common/http';
 
 interface SongFeatures {
   id: string;
@@ -44,6 +46,10 @@ export class SearchComponent implements OnInit {
     artist: '',
     year: '',
   };
+
+  public get userIds(): string[] {
+    return this.userSongs.map((s) => s.id);
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -166,6 +172,11 @@ export class SearchComponent implements OnInit {
 
   onSubmit() {
     this.search(this.searchForm.value);
+  }
+
+  onRecommend(recommender: RecommenderComponent) {
+    this.songs = [];
+    recommender.findSimilar();
   }
 
   onSurprise() {

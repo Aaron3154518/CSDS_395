@@ -17,12 +17,8 @@
         </div>
       </div>
     </div>
-    <div class="col-xs-6" style="width: 25%" *ngIf="ids.length > 0">
-      <app-recommender
-        class="recommender"
-        [seedIds]="ids"
-        [showButton]="true"
-      ></app-recommender>
+    <div *ngIf="findSim && ids.length > 0" class="col-xs-6" style="width: 25%">
+      <app-recommender class="recommender" [seedIds]="ids"></app-recommender>
     </div>
   </div>
 </div>

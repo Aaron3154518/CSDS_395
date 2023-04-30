@@ -8,6 +8,7 @@ import { Song } from '../song-list/song-list.component';
 })
 export class SongsComponent {
   @Input() songs: Song[] = [];
+  @Input() findSim: boolean = true;
 
   public get ids(): string[] {
     return this.songs.map((s) => s.id);

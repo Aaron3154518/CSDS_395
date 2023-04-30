@@ -24,6 +24,11 @@
         placeholder="Artist"
       />
     </div>
+    <div class="col-xs-6">
+      <button class="btn" type="button" (click)="onRecommend(recommender)">
+        Recommend Me!
+      </button>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-6">
@@ -35,11 +40,19 @@
       />
     </div>
     <div class="col-xs-6">
-      <button class="btn" (click)="onSurprise()">Surprise Me!</button>
+      <button class="btn" type="button" (click)="onSurprise()">
+        Surprise Me!
+      </button>
     </div>
   </div>
 </form>
 
 <br />
 
-<app-songs [songs]="songs"></app-songs>
+<app-songs [songs]="songs" [findSim]="false"></app-songs>
+<app-recommender
+  #recommender
+  class="recommender"
+  [seedIds]="userIds"
+  [showButton]="false"
+></app-recommender>

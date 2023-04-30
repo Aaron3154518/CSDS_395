@@ -12,7 +12,7 @@ export class RecommenderComponent implements OnInit {
   @Input() seedName: string = '';
   @Input() seedArtist: string = '';
   @Input() seedIds: string[] = [];
-  @Input() showButton: boolean = false;
+  @Input() showButton: boolean = true;
   songs: Song[] = [];
   scores: number[] = [];
   loading: boolean = false;
