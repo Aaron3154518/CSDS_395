@@ -12,7 +12,7 @@ const server = http.createServer(async (req, res) => {
     req.on("end", async () => {
       let args = chunks.toString().split(",");
       console.log(args);
-      await PythonShell.run("scripts/SongRec.py", {
+      await PythonShell.run("scripts/SongRecNew.py", {
         args: args,
       }).then((data) => {
         res.statusCode = 200;
