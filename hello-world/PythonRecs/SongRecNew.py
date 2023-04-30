@@ -103,8 +103,8 @@ def main_1():
 
     #Change this for output of top songs
     temp = vec_cos(song1,reduced_1,data_og)
-    ids = temp.head(10).loc[:, 'track_id'].to_list()
-    scores = temp.head(10).loc[:,'sim_score'].to_list()
+    ids = list(set(temp.head(20).loc[:, 'track_id'].to_list()))
+    scores = list(set(temp.head(20).loc[:,'sim_score'].to_list()))
     print(','.join(ids))
     print(','.join([str(s) for s in scores]))
 

@@ -39,7 +39,13 @@ def main_2():
     #df = pd.read_csv('user1_PCA.csv')
     #df_cp = df.drop(columns=['track_id'],axis=1,inplace=False)
     df = pd.read_csv('SpotifyFeatures.csv')
+    df_og = df.copy()
+    df = sr.data_clean(df)
     songs = [choice(liked) for _ in range(5)]
+    
+    df = df.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+    scaler_1, pca_1, reduced_1 = df.run_pca(df,0.9)
+
     dislikes = []
     for i in songs: 
         dislikes.append(sr.least_vec_cos(i,df_std))
