@@ -71,9 +71,10 @@ def least_vec_cos(song,dta):
 
 def main_1():
     #Intput: weights, song title, artist, spotify id(optional)
-    #args = sys.argv[1:]
+    args = sys.argv[1:]
     weights = [1,1,1,1,1,1,1,1,1,1]
-    song = ['Shake It Off', 'Taylor Swift'] #this is just temp
+    song = args[0]
+    #song = ['Shake It Off', 'Taylor Swift'] #this is just temp
 
     #df = pd.read_csv('SpotifyFeatures.csv')
 
@@ -87,7 +88,7 @@ def main_1():
     df = pd.DataFrame(data)
 
     df = data_clean(df)
-    search_song = df.loc[(df['track_name'] == song[0]) & (df['artist_name'] == song[1])]
+    search_song = df.loc[(df['track_id'] == song[0]) ]
     search_song = search_song.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
     #print(df_1)
     #drop song specific data and non-numeric values
