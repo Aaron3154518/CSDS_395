@@ -29,7 +29,6 @@ const server = http.createServer(async (req, res) => {
         await PythonShell.run("scripts/NiaveBayes.py", {
           args: args.join(","),
         }).then((data) => {
-          console.log(data);
           res.write(data[0]);
           res.write("\n");
           res.write(data[1]);
