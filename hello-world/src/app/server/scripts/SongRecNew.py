@@ -75,7 +75,7 @@ def main_1():
     #Intput: weights, song title, artist, spotify id(optional)
     args = sys.argv[1:]
     weights = [1,1,1,1,1,1,1,1,1,1]
-    song = [args[0], args[1]]
+    song = args[0]
     # song = ["Free Bird", "Lynyrd Skynyrd"]
     #song = ['Shake It Off', 'Taylor Swift'] #this is just temp
 
@@ -92,7 +92,7 @@ def main_1():
     data_og = df.copy()
 
     df = data_clean(df)
-    search_song = df.loc[(df['track_name'] == song[0]) & (df['artist_name'] == song[1])]
+    search_song = df.loc[(df['track_id'] == song)]
     search_song = search_song.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
     #print(df_1)
     #drop song specific data and non-numeric values

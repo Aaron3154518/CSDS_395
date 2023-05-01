@@ -8,10 +8,8 @@ import { SpotifyService } from '../spotify.service';
   templateUrl: './recommender.component.html',
   styleUrls: ['./recommender.component.css'],
 })
-export class RecommenderComponent implements OnInit {
-  @Input() seedName: string = '';
-  @Input() seedArtist: string = '';
-  @Input() seedIds: string[] = [];
+export class RecommenderComponent {
+  @Input() seedIds: string | string[] = [];
   @Input() showButton: boolean = true;
   songs: Song[] = [];
   scores: number[] = [];
@@ -22,22 +20,12 @@ export class RecommenderComponent implements OnInit {
     private spotifyService: SpotifyService
   ) {}
 
-  ngOnInit(): void {
-    if (
-      this.seedIds.length === 0 &&
-      this.seedName.length === 0 &&
-      this.seedArtist.length === 0
-    ) {
-      console.log('Get user ids');
-    }
-  }
-
   findSimilar() {
     this.loading = true;
     let req: string =
-      this.seedIds.length > 0
-        ? `p,${this.seedIds.join(',')}`
-        : `t,${this.seedName},${this.seedArtist}`;
+      typeof this.seedIds === 'string'
+        ? `t,${this.seedIds}`
+        : `p,${this.seedIds.join(',')}`;
     this.http
       .post('http://127.0.0.1:3300', req, {
         responseType: 'text',

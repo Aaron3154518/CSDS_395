@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { SpotifyService } from '../spotify.service';
 
 interface Song {
@@ -87,8 +87,8 @@ export class SongComponent implements OnInit, AfterViewInit {
     script.defer = true;
     body.appendChild(script);
 
-    this.route.params.subscribe((params: any) => {
-      this.id = this.route.snapshot.params['id'];
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
       this.spotifyService.query(`audio-analysis/${this.id}`).subscribe({
         next: (data: any) => {
           console.log(data);
@@ -111,15 +111,6 @@ export class SongComponent implements OnInit, AfterViewInit {
           console.log(err);
         },
       });
-      this.spotifyService.query(`tracks/${this.id}`).subscribe({
-        next: (data: any) => {
-          this.name = data.name;
-          this.artist = data.artists[0].name;
-          console.log(this.name, this.artist);
-        },
-        error: (err: any) => console.log(err),
-      });
-
       this.showSong(this.id);
     });
 
