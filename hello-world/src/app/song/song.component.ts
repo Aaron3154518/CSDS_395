@@ -239,7 +239,7 @@ export class SongComponent implements OnInit, AfterViewInit {
         r.vy += r.ay * dt;
         this.drawRain(r);
       });
-      this.rainTimer -= dt * this.circle.t_factor;
+      this.rainTimer -= dt * this.circle.t_factor * 3;
       if (this.rainTimer < 0) {
         this.rain.push({
           x: this.circle.cx * w,

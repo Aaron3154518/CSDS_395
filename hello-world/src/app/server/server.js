@@ -25,8 +25,17 @@ const server = http.createServer(async (req, res) => {
           res.write("\n");
           res.write(data[1]);
         });
-      } else if (flag === "p") {
-        await PythonShell.run("scripts/TODO.py", {
+      } else if (flag === "b") {
+        await PythonShell.run("scripts/NiaveBayes.py", {
+          args: args.join(","),
+        }).then((data) => {
+          console.log(data);
+          res.write(data[0]);
+          res.write("\n");
+          res.write(data[1]);
+        });
+      } else if (flag === "l") {
+        await PythonShell.run("scripts/LogisticRegression.py", {
           args: args.join(","),
         }).then((data) => {
           res.write(data[0]);

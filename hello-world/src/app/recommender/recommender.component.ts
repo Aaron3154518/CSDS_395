@@ -11,6 +11,7 @@ import { SpotifyService } from '../spotify.service';
 export class RecommenderComponent {
   @Input() seedIds: string | string[] = [];
   @Input() showButton: boolean = true;
+  @Input() nbayes: boolean = false;
   songs: Song[] = [];
   scores: number[] = [];
   loading: boolean = false;
@@ -25,7 +26,9 @@ export class RecommenderComponent {
     let req: string =
       typeof this.seedIds === 'string'
         ? `t,${this.seedIds}`
-        : `p,${this.seedIds.join(',')}`;
+        : this.nbayes
+        ? `b,${this.seedIds.join(',')}`
+        : `l,${this.seedIds.join(',')}`;
     this.http
       .post('http://127.0.0.1:3300', req, {
         responseType: 'text',
