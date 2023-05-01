@@ -42,14 +42,37 @@ def main_2():
     df_og = df.copy()
     df = sr.data_clean(df)
     songs = [choice(liked) for _ in range(5)]
-    
-    df = df.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+    temp_s = []
     scaler_1, pca_1, reduced_1 = df.run_pca(df,0.9)
+    #find the songs in the data
+    for i in songs:
+        temp = df.loc[(df['track_id'] == i[0])]
+        temp = temp.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+        song_std = scaler_1.transform(temp)
+        song1 = pca_1.transform(song_std)
+        song1['liked_by_user'] = 0
+        temp_s.append(song1)
+    df = df.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+    #scaler_1, pca_1, reduced_1 = df.run_pca(df,0.9)
 
+    likes = []
+    for i in liked:
+        temp = df.loc[(df['track_id'] == i[0])]
+        temp = temp.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key','_id'])
+        song_std = scaler_1.transform(temp)
+        song1 = pca_1.transform(song_std)
+        song1['liked_by_user'] = 1
+        likes.append(song1)
+    #Gen song dislikes
     dislikes = []
     for i in songs: 
-        dislikes.append(sr.least_vec_cos(i,df_std))
-    print(naive_bayes(df_cp))
+        dislikes+=(sr.least_vec_cos(i,reduced_1, df).head(20).loc[:, 'track_id'].to_list())
+    finl = dislikes + likes
+    temp = naive_bayes(finl)
+    ids = list(set(temp.head(20).loc[:, 'track_id'].to_list()))
+    scores = list(set(temp.head(20).loc[:,'sim_score'].to_list()))
+    print(','.join(ids))
+    print(','.join([str(s) for s in scores]))
     #df = sr.data_clean(df)
 
     #Might need depending on what input data is recived
