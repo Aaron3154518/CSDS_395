@@ -70,13 +70,13 @@ def main_2():
     scaler_1, pca_1, reduced_1 = sr.run_pca(df_1,12)
     #find the songs in the data
     for i in songs:
-        #print(i)
         temp = df.loc[(df['track_id'] == i)]
         temp = temp.drop(columns=['track_id','artist_name', 'track_name', 'time_signature','mode','genre','key'])
-        song_std = scaler_1.transform(temp)
-        song1 = pca_1.transform(song_std)
+        if len(temp)>0:
+            song_std = scaler_1.transform(temp)
+            song1 = pca_1.transform(song_std)
         #song1['liked_by_user'] = [0]*len(song1['1'])
-        temp_s.append(song1[0])
+            temp_s.append(song1[0])
     
     #Gen song dislikes
     dislikes = []
@@ -96,7 +96,6 @@ def main_2():
 
 
     temp = naive_bayes(filtered_df_1)
-    print(temp)
     ids = list(set(temp.head(20).loc[:, 'track_id'].to_list()))
     scores = list(set(temp.head(20).loc[:,'Naive Bayes'].to_list()))
     print(','.join(ids))
