@@ -33,6 +33,15 @@ interface Circle {
   color: string;
 }
 
+interface Rain {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  ay: number;
+  color: string;
+}
+
 @Component({
   selector: 'app-song',
   templateUrl: './song.component.html',
@@ -70,6 +79,8 @@ export class SongComponent implements OnInit, AfterViewInit {
     t_factor: 0,
     color: 'red',
   };
+  rain: Rain[] = [];
+  rainTimer: number = 0;
 
   interval: NodeJS.Timer;
 
@@ -191,7 +202,8 @@ export class SongComponent implements OnInit, AfterViewInit {
 
   onUpdate() {
     if (!this.paused) {
-      this.progress += 0.03 / this.song.duration;
+      let dt = 0.03;
+      this.progress += dt / this.song.duration;
       let [b1, b2, p]: [number, number, number] = this.find(
         this.progress * this.song.duration,
         this.song.beats
@@ -206,8 +218,8 @@ export class SongComponent implements OnInit, AfterViewInit {
       let w: number = this.ctx.canvas.clientWidth;
       let h: number = this.ctx.canvas.clientHeight;
       let m: number = Math.max(w, h);
-      this.ctx.canvas.width = (w * 1000) / m;
-      this.ctx.canvas.height = (h * 1000) / m;
+      w = this.ctx.canvas.width = (w * 1000) / m;
+      h = this.ctx.canvas.height = (h * 1000) / m;
       this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
       let new_t_factor: number =
         this.song.loudness / ((s1.loud_max - s1.loud_min) * p2 + s1.loud_min);
@@ -221,6 +233,24 @@ export class SongComponent implements OnInit, AfterViewInit {
         c.t_factor += 0.25 * p;
         this.drawCircle(c);
       });
+      this.rain.forEach((r: Rain) => {
+        r.x += r.vx * dt;
+        r.y += r.vy * dt + (r.ay * dt * dt) / 2;
+        r.vy += r.ay * dt;
+        this.drawRain(r);
+      });
+      this.rainTimer -= dt * this.circle.t_factor;
+      if (this.rainTimer < 0) {
+        this.rain.push({
+          x: this.circle.cx * w,
+          y: this.circle.cy * h,
+          vx: (Math.random() * 150 + 50) * (Math.random() > 0.5 ? 1 : -1),
+          vy: -(Math.random() * 200 + 200),
+          ay: Math.random() * 100 + 100,
+          color: this.circle.color,
+        });
+        this.rainTimer = 0.5;
+      }
     }
   }
 
@@ -249,6 +279,18 @@ export class SongComponent implements OnInit, AfterViewInit {
     if (this.embedController && this.shown != id) {
       this.embedController.loadUri(`spotify:track:${id}`);
       this.shown = id;
+    }
+  }
+
+  drawRain(r: Rain) {
+    if (this.ctx) {
+      let w: number = this.ctx.canvas.width;
+      let h: number = this.ctx.canvas.height;
+      let r_w: number = Math.min(w, h) / 75;
+      this.ctx.beginPath();
+      this.ctx.fillStyle = r.color;
+      this.ctx.rect(r.x - r_w, r.y - r_w, r_w * 2, r_w * 2);
+      this.ctx.fill();
     }
   }
 
