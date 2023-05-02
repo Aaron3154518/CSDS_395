@@ -1,0 +1,33 @@
+genre,artist_name,track_name,track_id,popularity,acousticness,danceability,duration_ms,energy,instrumentalness,key,liveness,loudness,mode,speechiness,tempo,time_signature,valence
+ ,"('ILLENIUM', 'Jon Bellion')",Good Things Fall Apart (with Jon Bellion),6pooRNiLyYpxZeIA5kJ5EX,63,0.0128,0.643,216668,0.594,0,2,0.118,-5.453,1,0.0318,144.033,4,0.442
+ ,"['R3HAB', 'Mike Williams']",Lullaby,0DhkTGjEaIHaSxTfC14BFm,4,0.0267,0.626,160184,0.8,0.000138,1,0.0623,-3.988,0,0.035,127.966,4,0.258
+ ,['21 Savage'],a lot,2t8yVaLvJ0RenpXUIAC52d,83,0.0395,0.837,288624,0.636,0.00125,1,0.342,-7.643,1,0.086,145.972,4,0.274
+ ,['Travis Scott'],HIGHEST IN THE ROOM,3eekarcy7kvN4yt5ZFzltW,84,0.0546,0.598,175721,0.427,5.83E-06,7,0.21,-8.764,0,0.0317,76.469,4,0.0605
+ ,['The Weeknd'],Heartless,6bnF93Rx87YqUBLSgjiMU8,87,0.0236,0.537,198267,0.746,1.01E-06,10,0.156,-5.507,0,0.15,170.062,4,0.252
+ ,['Post Malone'],Wow.,7xQAfvXzm3AkraOtGPWIZg,83,0.136,0.829,149547,0.539,1.78E-06,11,0.103,-7.359,0,0.208,99.96,4,0.388
+ ,"['Post Malone', 'Young Thug']",Goodbyes (feat. Young Thug),0t3ZvGKlmYmVsDzBJAXK8C,80,0.456,0.548,174853,0.653,0,5,0.103,-3.875,1,0.081,150.068,4,0.163
+ ,['Post Malone'],Circles,21jGcNKet2qwijlDFuPiPb,87,0.192,0.695,215280,0.762,0.00244,0,0.0863,-3.497,1,0.0395,120.042,4,0.553
+ ,['Post Malone'],A Thousand Bad Times,2J0NXdHr6MYvKDSxB7k3V2,68,0.105,0.632,221173,0.732,1.15E-05,6,0.111,-3.498,1,0.092,159,4,0.317
+ ,['Post Malone'],Saint-Tropez,05mDaV9Vb3wrzjF6OPZnhq,75,0.0545,0.617,150867,0.684,0,0,0.104,-3.618,1,0.0439,132.113,4,0.295
+ ,"['Kodak Black', 'Offset', 'Travis Scott']",ZEZE (feat. Travis Scott & Offset),0FZ4Dmg8jJJAPJnvBIzD9z,77,0.0521,0.861,228760,0.603,0,8,0.0924,-5.788,0,0.176,98.043,4,0.504
+ ,['Galantis'],Peanut Butter Jelly,3aIhJDHxr1kgTSnutJxPTH,65,0.00104,0.708,203133,0.945,0.0803,5,0.227,-3.247,0,0.234,127.96,4,0.545
+ ,['Galantis'],Holy Water,7Ga9ZSdPAcQXQvd1ObVFpm,45,0.0653,0.587,176657,0.734,0.000571,9,0.398,-4.558,1,0.0407,125.848,4,0.401
+ ,['Galantis'],No Money,6M6Tk58pQvABy6ru66dY3d,70,0.0282,0.674,191293,0.915,0.00337,6,0.273,-3.999,0,0.0411,126.038,4,0.78
+ ,['Galantis'],Runaway (U & I),46lFttIf5hnUZMGvjK0Wxo,77,0.00711,0.506,227074,0.805,0.00193,1,0.0856,-4.119,1,0.0469,126.008,4,0.383
+ ,"['Galantis', 'Dolly Parton', 'Mr. Probz']",Faith (with Dolly Parton) [feat. Mr. Probz],35MKhw2YBKApmD7fAnPERC,58,0.145,0.547,186805,0.795,0,8,0.11,-3.721,1,0.0489,118.118,4,0.723
+ ,"['Steve Aoki', 'Chris Lake', 'Tujamo', 'Kid Ink']",Delirious (Boneless) (feat. Kid Ink),2SSFvQBwsxeazzo7z5l9gD,62,0.0195,0.706,223413,0.912,0,8,0.232,-4.44,0,0.0565,128.004,4,0.925
+ ,['Drake'],Passionfruit,5mCPDVBb16L4XQwDdbRUpz,85,0.256,0.809,298941,0.463,0.085,11,0.109,-11.377,1,0.0396,111.98,4,0.364
+ ,['George Ezra'],Budapest,2ixsaeFioXJmMgkkbd4uj1,81,0.0846,0.717,200733,0.455,0,5,0.11,-8.303,1,0.0276,127.812,4,0.389
+ ,"['Kanye West', 'Chris Martin']",Homecoming,2ovQ5MCx91XVjgVWEPfvks,3,0.337,0.667,203493,0.747,0,1,0.115,-7.059,1,0.189,86.917,4,0.918
+ ,['Kanye West'],All Mine,3U21A07gAloCc4P7J8rxcn,76,0.123,0.925,145507,0.31,0,11,0.0931,-6.531,0,0.291,121.927,4,0.291
+ ,"['Pop Smoke', '50 Cent', 'Roddy Ricch']",The Woo (feat. 50 Cent & Roddy Ricch),1H7KnK26kc1YyellpbINEn,75,0.0221,0.49,201600,0.618,3.77E-06,1,0.259,-5.655,1,0.104,99.7,4,0.286
+ ,['Lil Mosey'],Blueberry Faygo,6wJYhPfqk3KGhHRG76WzOh,73,0.207,0.774,162547,0.554,0,0,0.132,-7.909,1,0.0383,99.034,4,0.349
+ ,"['Travis Scott', 'Kacy Hill']",90210 (feat. Kacy Hill),51EC3I1nQXpec4gDk0mQyP,80,0.113,0.402,339067,0.526,8.33E-06,9,0.105,-6.741,0,0.0904,81.404,4,0.312
+ ,"['Post Malone', 'Swae Lee']",Sunflower - Spider-Man: Into the Spider-Verse,3KkXRkHbMCARz0aVfEt68P,84,0.556,0.76,158040,0.479,0,2,0.0703,-5.574,1,0.0466,89.911,4,0.913
+ ,['Glass Animals'],Heat Waves,3USxtqRwSYz57Ewm6wWRMp,88,0.44,0.761,238805,0.525,6.70E-06,11,0.0921,-6.9,1,0.0944,80.87,4,0.531
+ ,"['Kid Cudi', 'Kanye West']",Erase Me - Main,6XkuklKiHYVTlVvWlTgQYP,72,0.063,0.687,192253,0.631,0,9,0.108,-5.612,1,0.129,186.071,4,0.853
+ ,['The Weeknd'],Save Your Tears,5QO79kh1waicV47BqGRL3g,90,0.0212,0.68,215627,0.826,1.24E-05,0,0.543,-5.487,1,0.0309,118.051,4,0.644
+ ,['Kid Cudi'],Day 'N' Nite (nightmare),5FEXPoPnzueFJQCPRIrC3c,71,0.499,0.871,221267,0.44,4.15E-06,11,0.114,-6.25,0,0.0761,137.996,4,0.799
+ ,"['Kid Cudi', 'MGMT', 'Ratatat']",Pursuit Of Happiness (Nightmare),6MtKObWYda2qnNIpJI21uD,72,0.484,0.63,295293,0.605,9.29E-05,0,0.298,-8.951,1,0.0414,115.277,4,0.266
+ ,['Kid Cudi'],Soundtrack 2 My Life,0rFpcfF0YfvFUYsl99Bw9d,69,0.465,0.464,235627,0.754,1.57E-05,9,0.37,-6.653,0,0.128,86.501,4,0.444
+ ,"['Joji', 'Diplo']",Daylight,6Ed1q0X8oSKSm4IIhiQbYg,71,0.00488,0.528,163906,0.749,9.60E-05,7,0.0949,-7.571,1,0.0479,163.944,4,0.729
